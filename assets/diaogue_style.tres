@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dcnyhvwtegtw8"]
+
+[sub_resource type="SystemFont" id="SystemFont_bu1yb"]
+font_names = PackedStringArray("Public Pixel")
+
+[resource]
+font = SubResource("SystemFont_bu1yb")
+font_size = 8
