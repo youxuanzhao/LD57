@@ -68,9 +68,8 @@ font_names = PackedStringArray("Public Pixel")
 font = SubResource("SystemFont_qjcqe")
 font_color = Color(1, 1, 1, 0)
 
-[sub_resource type="Animation" id="Animation_37iue"]
+[sub_resource type="Animation" id="Animation_ll25s"]
 resource_name = "fade_black"
-length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -78,7 +77,7 @@ tracks/0/path = NodePath("ColorRect2:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.933333),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
@@ -90,27 +89,15 @@ tracks/1/path = NodePath("..")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(4),
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
 "method": &"transit"
 }]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("LevelName:label_settings:font_color")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.933333, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
 
-[sub_resource type="Animation" id="Animation_n6p8m"]
+[sub_resource type="Animation" id="Animation_sk60w"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -122,22 +109,10 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("LevelName:label_settings:font_color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Color(0, 0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_m3r7s"]
+[sub_resource type="Animation" id="Animation_om4r1"]
 resource_name = "fade_white"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -152,12 +127,11 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_m3r7s"]
-resource_local_to_scene = true
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_171oe"]
 _data = {
-&"RESET": SubResource("Animation_n6p8m"),
-&"fade_black": SubResource("Animation_37iue"),
-&"fade_white": SubResource("Animation_m3r7s")
+&"RESET": SubResource("Animation_sk60w"),
+&"fade_black": SubResource("Animation_ll25s"),
+&"fade_white": SubResource("Animation_om4r1")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ll25s"]
@@ -240,7 +214,7 @@ script = ExtResource("5_xp8tn")
 [node name="ColorRect2" type="ColorRect" parent="ScreenEffect"]
 offset_right = 640.0
 offset_bottom = 360.0
-color = Color(1, 1, 1, 0)
+color = Color(0, 0, 0, 0)
 
 [node name="ColorRect" type="ColorRect" parent="ScreenEffect"]
 material = SubResource("ShaderMaterial_rhhhf")
@@ -259,7 +233,7 @@ label_settings = SubResource("LabelSettings_jv3i5")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenEffect"]
 libraries = {
-&"": SubResource("AnimationLibrary_m3r7s")
+&"": SubResource("AnimationLibrary_171oe")
 }
 
 [node name="Checkpoint2" type="Area2D" parent="."]

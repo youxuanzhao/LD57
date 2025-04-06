@@ -1,0 +1,452 @@
+[gd_scene load_steps=26 format=4 uid="uid://dgqg2kt0v2xxw"]
+
+[ext_resource type="Script" uid="uid://d1iuv3nsbtetu" path="res://scripts/game_manager.gd" id="1_rr1tt"]
+[ext_resource type="Script" uid="uid://c20uir8y6xcqr" path="res://scripts/primary_camera.gd" id="2_7ewpb"]
+[ext_resource type="Texture2D" uid="uid://m682hf33k8cg" path="res://assets/tiles.png" id="3_py6g0"]
+[ext_resource type="Script" uid="uid://oniok2eyaxx7" path="res://scripts/tile_map.gd" id="4_g31h8"]
+[ext_resource type="PackedScene" uid="uid://cg3rm2flhfpjd" path="res://scenes/player.tscn" id="5_hy5x3"]
+[ext_resource type="Script" uid="uid://2x32tkbpwspf" path="res://scripts/platform.gd" id="6_dmmei"]
+[ext_resource type="Texture2D" uid="uid://6v0tluh4k370" path="res://assets/platform.png" id="7_bee8o"]
+[ext_resource type="PackedScene" uid="uid://btsr3q5aeg5pf" path="res://scenes/door.tscn" id="8_y88yj"]
+[ext_resource type="Script" uid="uid://bgbq615x14ap8" path="res://scripts/screen_effect.gd" id="9_675ay"]
+[ext_resource type="Shader" uid="uid://pnyslxfthsec" path="res://assets/shaders/crt_effect.gdshader" id="10_q41qf"]
+[ext_resource type="Script" uid="uid://jqpba5py5by1" path="res://scripts/level_1_control.gd" id="11_s0ibv"]
+[ext_resource type="Script" uid="uid://6uir81ovkprm" path="res://scripts/breakable_platform.gd" id="12_7ewpb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qcd3b"]
+texture = ExtResource("3_py6g0")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+1:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+0:3/0 = 0
+2:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+6:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_88ety"]
+sources/0 = SubResource("TileSetAtlasSource_qcd3b")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6w7d"]
+size = Vector2(48, 16)
+
+[sub_resource type="SystemFont" id="SystemFont_j6w7d"]
+font_names = PackedStringArray("Public Pixel")
+
+[sub_resource type="LabelSettings" id="LabelSettings_x4b8f"]
+font = SubResource("SystemFont_j6w7d")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhhhf"]
+shader = ExtResource("10_q41qf")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.23
+shader_parameter/warp_amount = 0.174
+shader_parameter/vignette_amount = 0.669
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.111
+shader_parameter/brightness_boost = 1.178
+
+[sub_resource type="SystemFont" id="SystemFont_qjcqe"]
+font_names = PackedStringArray("Public Pixel")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jv3i5"]
+font = SubResource("SystemFont_qjcqe")
+font_color = Color(1, 1, 1, 0)
+
+[sub_resource type="Animation" id="Animation_2y5yt"]
+resource_name = "fade_black"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"transit"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_2os1m"]
+resource_name = "fade_white"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2os1m"]
+_data = {
+&"fade_black": SubResource("Animation_2y5yt"),
+&"fade_white": SubResource("Animation_2os1m")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ll25s"]
+size = Vector2(644, 86)
+
+[sub_resource type="Gradient" id="Gradient_7ewpb"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Level3" type="Node2D"]
+script = ExtResource("1_rr1tt")
+
+[node name="PrimaryCamera" type="Camera2D" parent="."]
+script = ExtResource("2_7ewpb")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD7//n/AAAFAAQAAAD8//n/AAAFAAQAAAD9//n/AAAFAAQAAAD+//n/AAAFAAQAAAD///n/AAAFAAQAAAAAAPn/AAAFAAQAAAABAPn/AAAFAAQAAAACAPn/AAAFAAQAAAADAPn/AAAFAAQAAAAEAPn/AAAFAAQAAAAFAPn/AAAFAAQAAAAGAPn/AAAFAAQAAAD6//n/AAAFAAQAAAD5//n/AAAFAAQAAAD4//n/AAAFAAQAAAD3//n/AAAFAAQAAAD2//n/AAAFAAQAAAD1//n/AAAFAAQAAAAHAPn/AAAFAAQAAAAIAPn/AAAFAAQAAAAJAPn/AAAFAAQAAAD0//n/AAAEAAQAAAAKAPn/AAAGAAQAAAD0/wgAAAAEAAYAAAD9/wgAAAAGAAYAAAD8/wgAAAAFAAYAAAD7/wgAAAAFAAYAAAD6/wgAAAAFAAYAAAD5/wgAAAAFAAYAAAD4/wgAAAAFAAYAAAD3/wgAAAAFAAYAAAD2/wgAAAAFAAYAAAD1/wgAAAAFAAYAAAD0/wcAAAAEAAUAAAD0/wYAAAAEAAUAAAD0/wUAAAAEAAUAAAD0/wQAAAAEAAUAAAD0/wMAAAAEAAUAAAD0/wIAAAAEAAUAAAD0/wEAAAAEAAUAAAD0/wAAAAAEAAUAAAD0////AAAEAAUAAAD0//7/AAAEAAUAAAD0//3/AAAEAAUAAAD0//z/AAAEAAUAAAD0//v/AAAEAAUAAAD0//r/AAAEAAUAAAD9/wcAAAAGAAUAAAD9/wYAAAAGAAUAAAD9/wUAAAAGAAUAAAD9/wQAAAAGAAUAAAD9/wMAAAAGAAUAAAD9/wIAAAAGAAUAAAD9/wEAAAAGAAUAAAD+/wAAAAAFAAYAAAD//wAAAAAFAAYAAAAAAAAAAAAFAAYAAAABAAAAAAAFAAYAAAACAAAAAAAFAAYAAAADAAAAAAAFAAYAAAAEAAAAAAAFAAYAAAAFAAAAAAAFAAYAAAAGAAAAAAAFAAYAAAAHAAAAAAAFAAYAAAAIAAAAAAAFAAYAAAAJAAAAAAAFAAYAAAAKAAAAAAAGAAYAAAAKAPr/AAAGAAUAAAAKAPv/AAAGAAUAAAAKAPz/AAAGAAUAAAAKAP3/AAAGAAUAAAAKAP7/AAAGAAUAAAAKAP//AAAGAAUAAAA=")
+tile_set = SubResource("TileSet_88ety")
+script = ExtResource("4_g31h8")
+
+[node name="B1" type="ColorRect" parent="."]
+visible = false
+offset_left = -69.0
+offset_top = 29.0
+offset_right = 71.0
+offset_bottom = 51.0
+color = Color(0.129412, 0.117647, 0.12549, 1)
+
+[node name="Player" parent="." instance=ExtResource("5_hy5x3")]
+position = Vector2(-257, -308)
+
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Platform" type="AnimatableBody2D" parent="."]
+position = Vector2(-114, 40)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform2" type="AnimatableBody2D" parent="."]
+position = Vector2(-63, 74)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform2"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform3" type="AnimatableBody2D" parent="."]
+position = Vector2(-16, 110)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform3"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform4" type="AnimatableBody2D" parent="."]
+position = Vector2(57, 39)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(-1, -1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform4"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform5" type="AnimatableBody2D" parent="."]
+position = Vector2(105, 73)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(-1, -1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform5"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform5"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform6" type="AnimatableBody2D" parent="."]
+position = Vector2(155, 110)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(-1, -1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform6"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform6"]
+texture = ExtResource("7_bee8o")
+
+[node name="Door" parent="Platform6" instance=ExtResource("8_y88yj")]
+position = Vector2(0, -25)
+
+[node name="Platform7" type="AnimatableBody2D" parent="."]
+position = Vector2(160, -12)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform7"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform7"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform10" type="AnimatableBody2D" parent="."]
+position = Vector2(-36, -12)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(-1, -1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform10"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform10"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform11" type="AnimatableBody2D" parent="."]
+position = Vector2(-90, -43)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(-1, -1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform11"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform11"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform12" type="AnimatableBody2D" parent="."]
+position = Vector2(-151, -75)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(-1, -1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform12"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform12"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform13" type="AnimatableBody2D" parent="."]
+position = Vector2(-195, 8)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform13"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform13"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform14" type="AnimatableBody2D" parent="."]
+position = Vector2(-253, -26)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform14"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform14"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform8" type="AnimatableBody2D" parent="."]
+position = Vector2(103, -46)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform8"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform8"]
+texture = ExtResource("7_bee8o")
+
+[node name="Platform9" type="AnimatableBody2D" parent="."]
+position = Vector2(47, -79)
+script = ExtResource("6_dmmei")
+moving_direction = Vector2(1, 1)
+c_factor = Vector2(20, 0)
+metadata/_custom_type_script = "uid://2x32tkbpwspf"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform9"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform9"]
+texture = ExtResource("7_bee8o")
+
+[node name="Interface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LevelName" type="Label" parent="Interface"]
+layout_mode = 0
+offset_left = 53.0
+offset_top = -162.0
+offset_right = 293.0
+offset_bottom = -108.0
+text = "ALTHOUGH YOU
+COULDN'T FIX
+THE PAST"
+label_settings = SubResource("LabelSettings_x4b8f")
+
+[node name="ScreenEffect" type="CanvasLayer" parent="."]
+script = ExtResource("9_675ay")
+
+[node name="ColorRect2" type="ColorRect" parent="ScreenEffect"]
+visible = false
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ScreenEffect"]
+material = SubResource("ShaderMaterial_rhhhf")
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="LevelName" type="Label" parent="ScreenEffect"]
+offset_left = 249.0
+offset_top = 154.0
+offset_right = 393.0
+offset_bottom = 177.0
+text = "REJECTI🖤N
+
+BY   LOKA"
+label_settings = SubResource("LabelSettings_jv3i5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenEffect"]
+libraries = {
+&"": SubResource("AnimationLibrary_2os1m")
+}
+
+[node name="Checkpoint2" type="Area2D" parent="."]
+position = Vector2(-322, 202)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2"]
+position = Vector2(322, 22)
+shape = SubResource("RectangleShape2D_ll25s")
+
+[node name="Level1Control" type="Node2D" parent="."]
+script = ExtResource("11_s0ibv")
+
+[node name="BreakablePlatform" type="AnimatableBody2D" parent="."]
+position = Vector2(40, 0)
+script = ExtResource("12_7ewpb")
+metadata/_custom_type_script = "uid://6uir81ovkprm"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BreakablePlatform"]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="BreakablePlatform"]
+texture = ExtResource("7_bee8o")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="BreakablePlatform"]
+emitting = false
+amount = 32
+lifetime = 0.63
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.42
+emission_shape = 1
+emission_sphere_radius = 0.01
+direction = Vector2(0, 10)
+spread = 102.5
+gravity = Vector2(0, 10)
+initial_velocity_min = 20.0
+initial_velocity_max = 69.44
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+color = Color(0.534355, 0.530259, 0.624393, 1)
+color_ramp = SubResource("Gradient_7ewpb")
+
+[connection signal="transit_to_next_scene" from="." to="ScreenEffect" method="_on_level_1_transit_to_next_scene"]
+[connection signal="body_entered" from="Checkpoint2" to="Level1Control" method="_on_checkpoint_2_body_entered"]

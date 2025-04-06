@@ -1,6 +1,6 @@
-extends StaticBody2D
+extends Platform
+class_name BreakablePlatform
 
-func on_break(target: Array[Vector2i]):
-	for i in target:
-		CustomTileMap.instance.set_cell(i)
+func on_break():
+	pass
 	

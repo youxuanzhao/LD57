@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="LD57"
-run/main_scene="uid://8o8p00g7weru"
+run/main_scene="uid://cftn7ywd8en5v"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/max_fps=60
 config/icon="res://icon.svg"

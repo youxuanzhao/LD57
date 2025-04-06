@@ -1,17 +1,17 @@
-[gd_scene load_steps=22 format=4 uid="uid://b4g6ecduxjj5s"]
+[gd_scene load_steps=22 format=4 uid="uid://dc3psiitul2nh"]
 
-[ext_resource type="Script" uid="uid://d1iuv3nsbtetu" path="res://scripts/game_manager.gd" id="1_2y5yt"]
-[ext_resource type="Script" uid="uid://c20uir8y6xcqr" path="res://scripts/primary_camera.gd" id="2_2os1m"]
-[ext_resource type="Texture2D" uid="uid://m682hf33k8cg" path="res://assets/tiles.png" id="3_go7sj"]
-[ext_resource type="Script" uid="uid://oniok2eyaxx7" path="res://scripts/tile_map.gd" id="4_7gny6"]
-[ext_resource type="PackedScene" uid="uid://cg3rm2flhfpjd" path="res://scenes/player.tscn" id="5_2aecg"]
-[ext_resource type="Script" uid="uid://jqpba5py5by1" path="res://scripts/level_1_control.gd" id="8_15mv3"]
-[ext_resource type="PackedScene" uid="uid://btsr3q5aeg5pf" path="res://scenes/door.tscn" id="8_e3sih"]
-[ext_resource type="Script" uid="uid://bgbq615x14ap8" path="res://scripts/screen_effect.gd" id="9_x2xxo"]
-[ext_resource type="Shader" uid="uid://pnyslxfthsec" path="res://assets/shaders/crt_effect.gdshader" id="10_2cbcq"]
+[ext_resource type="Script" uid="uid://d1iuv3nsbtetu" path="res://scripts/game_manager.gd" id="1_ne2mo"]
+[ext_resource type="Script" uid="uid://c20uir8y6xcqr" path="res://scripts/primary_camera.gd" id="2_6cvei"]
+[ext_resource type="Texture2D" uid="uid://m682hf33k8cg" path="res://assets/tiles.png" id="3_que50"]
+[ext_resource type="Script" uid="uid://oniok2eyaxx7" path="res://scripts/tile_map.gd" id="4_hey2k"]
+[ext_resource type="PackedScene" uid="uid://cg3rm2flhfpjd" path="res://scenes/player.tscn" id="5_172wr"]
+[ext_resource type="Script" uid="uid://bgbq615x14ap8" path="res://scripts/screen_effect.gd" id="6_g2hoc"]
+[ext_resource type="Shader" uid="uid://pnyslxfthsec" path="res://assets/shaders/crt_effect.gdshader" id="7_fldb1"]
+[ext_resource type="PackedScene" uid="uid://btsr3q5aeg5pf" path="res://scenes/door.tscn" id="8_6cvei"]
+[ext_resource type="Script" uid="uid://jqpba5py5by1" path="res://scripts/level_1_control.gd" id="8_guvtl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qcd3b"]
-texture = ExtResource("3_go7sj")
+texture = ExtResource("3_que50")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -66,7 +66,7 @@ texture = ExtResource("3_go7sj")
 sources/0 = SubResource("TileSetAtlasSource_qcd3b")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j6w7d"]
-size = Vector2(272, 16.5)
+size = Vector2(64, 16)
 
 [sub_resource type="SystemFont" id="SystemFont_j6w7d"]
 font_names = PackedStringArray("Public Pixel")
@@ -75,7 +75,7 @@ font_names = PackedStringArray("Public Pixel")
 font = SubResource("SystemFont_j6w7d")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rhhhf"]
-shader = ExtResource("10_2cbcq")
+shader = ExtResource("7_fldb1")
 shader_parameter/resolution = Vector2(320, 180)
 shader_parameter/scan_line_amount = 0.23
 shader_parameter/warp_amount = 0.174
@@ -144,16 +144,16 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ll25s"]
 size = Vector2(644, 86)
 
-[node name="Level1" type="Node2D"]
-script = ExtResource("1_2y5yt")
+[node name="Level2" type="Node2D"]
+script = ExtResource("1_ne2mo")
 
 [node name="PrimaryCamera" type="Camera2D" parent="."]
-script = ExtResource("2_2os1m")
+script = ExtResource("2_6cvei")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD//wIAAAAEAAAAAAD+/wIAAAAEAAAAAAD8/wIAAAAEAAAAAAD9/wIAAAAEAAAAAAABAAIAAAAEAAAAAAACAAIAAAAEAAAAAAADAAIAAAAEAAAAAAAAAAIAAAAEAAAAAAAHAAAAAAAAAAMAAAAHAAEAAAAAAAQAAAAIAAIAAAAFAAAAAAAHAAIAAAAEAAAAAAAGAAIAAAAEAAAAAAAFAAIAAAAEAAAAAAAEAAIAAAAEAAAAAAD7/wIAAAAEAAAAAAD6/wIAAAAEAAAAAAD5/wIAAAAEAAAAAAD4/wIAAAADAAAAAAA=")
+tile_map_data = PackedByteArray("AAAIAAIAAAAFAAAAAAAHAAIAAAAEAAAAAAAGAAIAAAAEAAAAAAD5/wIAAAAFAAAAAAD4/wIAAAAEAAAAAAAFAAIAAAADAAAAAAD2/wIAAAADAAAAAAD3/wIAAAAEAAAAAAA=")
 tile_set = SubResource("TileSet_88ety")
-script = ExtResource("4_7gny6")
+script = ExtResource("4_hey2k")
 
 [node name="B1" type="ColorRect" parent="."]
 visible = false
@@ -163,8 +163,8 @@ offset_right = 71.0
 offset_bottom = 51.0
 color = Color(0.129412, 0.117647, 0.12549, 1)
 
-[node name="Player" parent="." instance=ExtResource("5_2aecg")]
-position = Vector2(0, -308)
+[node name="Player" parent="." instance=ExtResource("5_172wr")]
+position = Vector2(-115, -308)
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
 
@@ -172,7 +172,14 @@ position = Vector2(0, -308)
 position = Vector2(0, 65)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(8, -25.25)
+position = Vector2(112, -25)
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(-244, 65)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(116, -25)
 shape = SubResource("RectangleShape2D_j6w7d")
 
 [node name="Interface" type="Control" parent="."]
@@ -183,16 +190,16 @@ offset_bottom = 40.0
 
 [node name="LevelName" type="Label" parent="Interface"]
 layout_mode = 0
-offset_left = 27.0
+offset_left = 54.0
 offset_top = -163.0
-offset_right = 299.0
+offset_right = 294.0
 offset_bottom = -128.0
-text = "THINGS MIGHT BE
-SIMPLE"
+text = "BUT IT FAILS
+SOMETIMES"
 label_settings = SubResource("LabelSettings_x4b8f")
 
 [node name="ScreenEffect" type="CanvasLayer" parent="."]
-script = ExtResource("9_x2xxo")
+script = ExtResource("6_g2hoc")
 
 [node name="ColorRect2" type="ColorRect" parent="ScreenEffect"]
 offset_right = 640.0
@@ -226,11 +233,11 @@ position = Vector2(-322, 202)
 position = Vector2(322, 22)
 shape = SubResource("RectangleShape2D_ll25s")
 
-[node name="Checkpoint1" parent="." instance=ExtResource("8_e3sih")]
-position = Vector2(120, 15)
+[node name="Checkpoint1" parent="." instance=ExtResource("8_6cvei")]
+position = Vector2(129, 16)
 
 [node name="Level1Control" type="Node2D" parent="."]
-script = ExtResource("8_15mv3")
+script = ExtResource("8_guvtl")
 
 [connection signal="transit_to_next_scene" from="." to="ScreenEffect" method="_on_level_1_transit_to_next_scene"]
 [connection signal="body_entered" from="Checkpoint2" to="Level1Control" method="_on_checkpoint_2_body_entered"]

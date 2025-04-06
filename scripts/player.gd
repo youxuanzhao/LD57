@@ -13,9 +13,11 @@ class_name Player
 @onready var run_player = $RunningSound
 @onready var hit_player = $HitSound
 
+static var instance: Player
 signal on_landing(intensity)
 
 func _ready() -> void:
+	instance = self
 	on_landing.connect(PrimaryCamera.instance.apply_shake)
 
 func _physics_process(delta) -> void:
@@ -50,8 +52,13 @@ func _physics_process(delta) -> void:
 		on_landing.emit(3.0)
 		hit_player.play()
 		sprite.frame = 10
-	move_and_slide()
-
+	var collided = move_and_slide()
+	
+	if collided:
+		var collider = get_last_slide_collision().get_collider()
+		if collider is BreakablePlatform:
+			collider.on_break()
+		
 func apply_gravity(delta) -> void:
 	if !is_on_floor():
 		velocity.y = move_toward(velocity.y, max_fall_speed, gravity * delta)
