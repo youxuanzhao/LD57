@@ -18,3 +18,29 @@ func transit():
 			get_tree().change_scene_to_file("res://scenes/level_1.tscn")
 		"Level1":
 			get_tree().change_scene_to_file("res://scenes/level_2.tscn")
+		"Level2":
+			get_tree().change_scene_to_file("res://scenes/level_3.tscn")
+		"Level3":
+			get_tree().change_scene_to_file("res://scenes/level_4.tscn")
+		"Level4":
+			get_tree().change_scene_to_file("res://scenes/level_5.tscn")
+		"Level5":
+			get_tree().change_scene_to_file("res://scenes/level_6.tscn")
+		"Level6":
+			get_tree().change_scene_to_file("res://scenes/her.tscn")
+		"Her":
+			get_tree().change_scene_to_file("res://scenes/outro.tscn")
+		"Outro":
+			get_tree().change_scene_to_file("res://scenes/secret_0.tscn")
+		"Secret0":
+			get_tree().change_scene_to_file("res://scenes/secret_1.tscn")
+		"Secret1":
+			get_tree().change_scene_to_file("res://scenes/secret_2.tscn")
+		"Secret2":
+			get_tree().change_scene_to_file("res://scenes/secret_3.tscn")
+		"Secret3":
+			get_tree().change_scene_to_file("res://scenes/secret_4.tscn")
+		"Secret4":
+			get_tree().change_scene_to_file("res://scenes/secret_5.tscn")
+		"Secret5":
+			get_tree().change_scene_to_file("res://scenes/outro.tscn")

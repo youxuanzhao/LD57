@@ -1,14 +1,16 @@
-[gd_scene load_steps=20 format=4 uid="uid://8o8p00g7weru"]
+[gd_scene load_steps=27 format=4 uid="uid://8o8p00g7weru"]
 
 [ext_resource type="Script" uid="uid://d1iuv3nsbtetu" path="res://scripts/game_manager.gd" id="1_2venv"]
 [ext_resource type="Shader" uid="uid://pnyslxfthsec" path="res://assets/shaders/crt_effect.gdshader" id="2_x4b8f"]
 [ext_resource type="Script" uid="uid://c20uir8y6xcqr" path="res://scripts/primary_camera.gd" id="3_qcd3b"]
 [ext_resource type="PackedScene" uid="uid://cg3rm2flhfpjd" path="res://scenes/player.tscn" id="4_tmr53"]
+[ext_resource type="Script" uid="uid://bgbq615x14ap8" path="res://scripts/screen_effect.gd" id="5_4asn1"]
 [ext_resource type="Script" uid="uid://dioobaqa3cvnp" path="res://scripts/dialogue_intro.gd" id="5_ahbqi"]
 [ext_resource type="Texture2D" uid="uid://m682hf33k8cg" path="res://assets/tiles.png" id="5_tmr53"]
 [ext_resource type="AudioStream" uid="uid://d0kh41a8q5iq6" path="res://assets/sfx/dialogue.wav" id="6_7gix3"]
 [ext_resource type="LabelSettings" uid="uid://dcnyhvwtegtw8" path="res://assets/diaogue_style.tres" id="7_4asn1"]
 [ext_resource type="PackedScene" uid="uid://btsr3q5aeg5pf" path="res://scenes/door.tscn" id="9_7gix3"]
+[ext_resource type="Script" uid="uid://crie64r7nk41k" path="res://scripts/secret_control.gd" id="11_dw7u0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qcd3b"]
 texture = ExtResource("5_tmr53")
@@ -44,6 +46,73 @@ sources/0 = SubResource("TileSetAtlasSource_qcd3b")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j6w7d"]
 size = Vector2(640, 67)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dw7u0"]
+shader = ExtResource("2_x4b8f")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.23
+shader_parameter/warp_amount = 0.174
+shader_parameter/vignette_amount = 0.669
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.111
+shader_parameter/brightness_boost = 1.178
+
+[sub_resource type="SystemFont" id="SystemFont_qjcqe"]
+font_names = PackedStringArray("Public Pixel")
+
+[sub_resource type="LabelSettings" id="LabelSettings_fyxdr"]
+font = SubResource("SystemFont_qjcqe")
+font_color = Color(1, 1, 1, 0)
+
+[sub_resource type="Animation" id="Animation_2y5yt"]
+resource_name = "fade_black"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"transit"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_2os1m"]
+resource_name = "fade_white"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect2:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2os1m"]
+_data = {
+&"fade_black": SubResource("Animation_2y5yt"),
+&"fade_white": SubResource("Animation_2os1m")
+}
+
 [sub_resource type="SystemFont" id="SystemFont_j6w7d"]
 font_names = PackedStringArray("Public Pixel")
 
@@ -57,16 +126,6 @@ font_names = PackedStringArray("Public Pixel")
 font = SubResource("SystemFont_m3r7s")
 font_size = 8
 font_color = Color(1, 0.0588235, 0.266667, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tmr53"]
-shader = ExtResource("2_x4b8f")
-shader_parameter/resolution = Vector2(320, 180)
-shader_parameter/scan_line_amount = 0.23
-shader_parameter/warp_amount = 0.174
-shader_parameter/vignette_amount = 0.669
-shader_parameter/vignette_intensity = 0.3
-shader_parameter/grille_amount = 0.111
-shader_parameter/brightness_boost = 1.178
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tmr53"]
 size = Vector2(20, 262)
@@ -94,6 +153,34 @@ position = Vector2(0, 65)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="ScreenEffect" type="CanvasLayer" parent="."]
+script = ExtResource("5_4asn1")
+
+[node name="ColorRect2" type="ColorRect" parent="ScreenEffect"]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ScreenEffect"]
+material = SubResource("ShaderMaterial_dw7u0")
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="LevelName" type="Label" parent="ScreenEffect"]
+offset_left = 249.0
+offset_top = 154.0
+offset_right = 393.0
+offset_bottom = 177.0
+text = "REJECTI🖤N
+
+BY   LOKA"
+label_settings = SubResource("LabelSettings_fyxdr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScreenEffect"]
+libraries = {
+&"": SubResource("AnimationLibrary_2os1m")
+}
 
 [node name="Interface" type="Control" parent="."]
 layout_mode = 3
@@ -163,14 +250,6 @@ offset_bottom = 144.0
 text = "IT'S TIME TO END THIS PAIN."
 label_settings = SubResource("LabelSettings_dw7u0")
 
-[node name="CRTEffect" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="ColorRect" type="ColorRect" parent="CRTEffect"]
-material = SubResource("ShaderMaterial_tmr53")
-offset_right = 640.0
-offset_bottom = 360.0
-
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2(-331, 62)
 
@@ -192,33 +271,37 @@ position = Vector2(292, 15)
 position = Vector2(-152, 21)
 
 [node name="Checkpoint1" type="Area2D" parent="Node2D"]
-position = Vector2(-114, -1)
+position = Vector2(-109, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Checkpoint1"]
 position = Vector2(5, -5.5)
 shape = SubResource("RectangleShape2D_ahbqi")
 
 [node name="Checkpoint2" type="Area2D" parent="Node2D"]
-position = Vector2(-50, -1)
+position = Vector2(13, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Checkpoint2"]
 position = Vector2(5, -5.5)
 shape = SubResource("RectangleShape2D_ahbqi")
 
 [node name="Checkpoint3" type="Area2D" parent="Node2D"]
-position = Vector2(3, -1)
+position = Vector2(160, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Checkpoint3"]
 position = Vector2(5, -5.5)
 shape = SubResource("RectangleShape2D_ahbqi")
 
 [node name="Checkpoint4" type="Area2D" parent="Node2D"]
-position = Vector2(85, -1)
+position = Vector2(308, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Checkpoint4"]
 position = Vector2(5, -5.5)
 shape = SubResource("RectangleShape2D_ahbqi")
 
+[node name="SecretControl" type="Node2D" parent="."]
+script = ExtResource("11_dw7u0")
+
+[connection signal="body_entered" from="Door" to="SecretControl" method="_on_door_body_entered"]
 [connection signal="body_entered" from="Node2D/Checkpoint1" to="Interface/Dialogue" method="_on_checkpoint_1_body_entered"]
 [connection signal="body_entered" from="Node2D/Checkpoint2" to="Interface/Dialogue" method="_on_checkpoint_2_body_entered"]
 [connection signal="body_entered" from="Node2D/Checkpoint3" to="Interface/Dialogue" method="_on_checkpoint_3_body_entered"]

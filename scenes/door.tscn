@@ -13,7 +13,7 @@ stereo = true
 
 [node name="Door" type="Area2D"]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("1_83dcw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

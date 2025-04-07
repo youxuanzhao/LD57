@@ -36,11 +36,11 @@ func _physics_process(delta) -> void:
 		if is_on_floor() && !Input.is_action_pressed("jump"):
 			anim_player.play("idle")
 
-	if Input.is_action_pressed("jump") && is_on_floor():
+	if Input.is_action_pressed("jump") && is_on_floor() && get_tree().current_scene.name != "Her":
 		anim_player.pause()
 		sprite.frame = 7
 
-	if Input.is_action_just_released("jump") && is_on_floor():
+	if Input.is_action_just_released("jump") && is_on_floor() && get_tree().current_scene.name != "Her":
 		velocity.y = jump_force
 		run_player.stream_paused = true
 		sprite.frame = 8

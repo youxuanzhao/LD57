@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=4 uid="uid://bjm0sk2opvklc"]
+[gd_scene load_steps=26 format=4 uid="uid://bjm0sk2opvklc"]
 
 [ext_resource type="Script" uid="uid://d1iuv3nsbtetu" path="res://scripts/game_manager.gd" id="1_wae8j"]
 [ext_resource type="Script" uid="uid://c20uir8y6xcqr" path="res://scripts/primary_camera.gd" id="2_ha73p"]
 [ext_resource type="Texture2D" uid="uid://m682hf33k8cg" path="res://assets/tiles.png" id="3_vcx5n"]
 [ext_resource type="Script" uid="uid://oniok2eyaxx7" path="res://scripts/tile_map.gd" id="4_56dhn"]
 [ext_resource type="PackedScene" uid="uid://cg3rm2flhfpjd" path="res://scenes/player.tscn" id="5_ax3dk"]
+[ext_resource type="PackedScene" uid="uid://iafs7sjnvqfk" path="res://scenes/platform.tscn" id="6_ax3dk"]
 [ext_resource type="Texture2D" uid="uid://6v0tluh4k370" path="res://assets/platform.png" id="6_ha73p"]
 [ext_resource type="Script" uid="uid://bgbq615x14ap8" path="res://scripts/screen_effect.gd" id="6_q2dsb"]
 [ext_resource type="Script" uid="uid://2x32tkbpwspf" path="res://scripts/platform.gd" id="6_vcx5n"]
@@ -146,6 +147,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ll25s"]
 size = Vector2(644, 86)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ax3dk"]
+size = Vector2(168, 673)
+
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_wae8j")
 
@@ -170,18 +174,10 @@ position = Vector2(-257, -308)
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
 
-[node name="Platform" type="AnimatableBody2D" parent="."]
+[node name="Platform" parent="." instance=ExtResource("6_ax3dk")]
 position = Vector2(-114, 40)
-script = ExtResource("6_vcx5n")
 moving_direction = Vector2(1, 1)
 c_factor = Vector2(20, 0)
-metadata/_custom_type_script = "uid://2x32tkbpwspf"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
-shape = SubResource("RectangleShape2D_j6w7d")
-
-[node name="Sprite2D" type="Sprite2D" parent="Platform"]
-texture = ExtResource("6_ha73p")
 
 [node name="Platform2" type="AnimatableBody2D" parent="."]
 position = Vector2(-63, 74)
@@ -374,7 +370,6 @@ label_settings = SubResource("LabelSettings_x4b8f")
 script = ExtResource("6_q2dsb")
 
 [node name="ColorRect2" type="ColorRect" parent="ScreenEffect"]
-visible = false
 offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0, 0, 0, 1)
@@ -411,5 +406,20 @@ shape = SubResource("RectangleShape2D_ll25s")
 [node name="Level1Control" type="Node2D" parent="."]
 script = ExtResource("8_5xqnf")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-409, -102)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1, 23.5)
+shape = SubResource("RectangleShape2D_ax3dk")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(408, -208)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(1, 141)
+shape = SubResource("RectangleShape2D_ax3dk")
+
 [connection signal="transit_to_next_scene" from="." to="ScreenEffect" method="_on_level_1_transit_to_next_scene"]
+[connection signal="body_entered" from="Platform6/Door" to="Level1Control" method="_on_door_body_entered"]
 [connection signal="body_entered" from="Checkpoint2" to="Level1Control" method="_on_checkpoint_2_body_entered"]

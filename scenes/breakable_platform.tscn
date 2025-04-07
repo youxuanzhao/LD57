@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjyjw8kvlhqls"]
+
+[ext_resource type="Script" uid="uid://6uir81ovkprm" path="res://scripts/breakable_platform.gd" id="1_1tpn0"]
+[ext_resource type="Shader" uid="uid://bwlvq6k1vpt1f" path="res://assets/shaders/blink.gdshader" id="2_1n7cr"]
+[ext_resource type="Texture2D" uid="uid://6v0tluh4k370" path="res://assets/platform.png" id="3_x23nx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6w7d"]
+size = Vector2(48, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ewpb"]
+resource_local_to_scene = true
+shader = ExtResource("2_1n7cr")
+shader_parameter/end_time = 2.0
+shader_parameter/start_freq = 1.0
+shader_parameter/end_freq = 5.0
+shader_parameter/time = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/blink_length = 0.5
+
+[sub_resource type="Gradient" id="Gradient_7ewpb"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="BreakablePlatform" type="AnimatableBody2D"]
+script = ExtResource("1_1tpn0")
+metadata/_custom_type_script = "uid://6uir81ovkprm"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j6w7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_7ewpb")
+texture = ExtResource("3_x23nx")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 32
+lifetime = 0.63
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.42
+emission_shape = 1
+emission_sphere_radius = 0.01
+direction = Vector2(0, 10)
+spread = 102.5
+gravity = Vector2(0, 10)
+initial_velocity_min = 20.0
+initial_velocity_max = 69.44
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+color = Color(0.534355, 0.530259, 0.624393, 1)
+color_ramp = SubResource("Gradient_7ewpb")

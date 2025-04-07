@@ -10,8 +10,6 @@ func _on_checkpoint_1_body_entered(body: Node2D) -> void:
 	$d1.visible = true
 	get_parent().get_parent().get_node("Checkpoint1").queue_free()
 	await get_tree().create_timer(2).timeout
-	get_parent().get_parent().get_node("StaticBody2D").queue_free()
-	get_parent().get_parent().get_node("B1").visible = true
 	
 
 
